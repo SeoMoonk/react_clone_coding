@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//index.html의 id가 root인 태그를 찾아서, 내용을 덮어 씌워준다.
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App /> //루트에 렌더링 해줌.
+    <App /> //찾아낸 id가 root인 태그에 App의 내용을 찾아 렌더링 해줌.
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
