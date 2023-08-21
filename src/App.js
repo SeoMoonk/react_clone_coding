@@ -18,7 +18,7 @@ function Food2(props) { //props => properties
   );
 }
 
-//V3
+//V3 (Map)
 function Food3({name}){
   return (
     <div>
@@ -42,6 +42,51 @@ const foodILike = [
   }
 ]
 
+function Food4({myFood}) {
+
+  return (
+    <div>
+      <h1>my Favorite Food is {myFood}</h1>
+    </div>
+
+  );
+}
+
+function Food5(props){
+
+  return (
+
+    <div>
+      <h1> my Faverite Food is {props.myFood}</h1>
+    </div>
+
+  );
+}
+
+function Food6({foodName}) {
+  return (
+
+    <div>
+      <h1> my map food is {foodName}</h1>
+    </div>
+
+  );
+}
+
+const myFoodList = [
+
+  {
+    name: 'A'
+  },
+  {
+    name: 'B'
+  },
+  {
+    name: 'C'
+  }
+
+]
+
 function App() {
   return (
     <div>
@@ -58,6 +103,16 @@ function App() {
       {foodILike.map((dish) => {
         return <Food3 name={dish.name} />
       })}
+      <hr />
+      <Food4 myFood="Rice" />
+      <hr/>
+      <Food5 myFood="Hello" />
+      <hr/>
+      {
+        myFoodList.map((myMenu) => {
+          return <Food6 foodName={myMenu.name} />
+        })
+      }
     </div>
   );
 }
