@@ -1,0 +1,11 @@
+.movie__title {
+    background-color: orange;
+}
+
+.movie__summary {
+    background-color: white;
+}
+
+.movie__year {
+    color:aquamarine;
+}

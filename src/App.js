@@ -11,7 +11,6 @@ class App extends React.Component {
         movies: [],
     };
 
-    
     componentDidMount() {
 
         // //state 컴포넌트가 처음 마운트(생성?) 되었을 때, 처음 상태는 true(로딩중) 일 것이다.
@@ -23,6 +22,8 @@ class App extends React.Component {
         this.getMovies();
     }
 
+    /* 페이지 열기 -> 마운트 -> getMovie 실행 -> 
+       async, await을 통해 비동기로 뒤에서 처리중 -> 처리 완료시 setState */
     getMovies = async () => {
 
         //async, await을 사용하여 비동기 작업(axios)이 다 마쳐질 때 까지 기다리라는 뜻?
@@ -33,41 +34,42 @@ class App extends React.Component {
             data: {
                 data: { movies },
             },
-        } = await axios.get("https://yts-proxy.now.sh/list_movies.json?sort_by=rating");
+        } = await axios.get("https://yts-proxy.now.sh/list_movies.json?sort_by=id");
 
-        //얻어온 영화 데이터를 state의 movies에 대입
+        //얻어온 영화 데이터를 state의 movies에 대입, 
+        //기다려서 다 받아오고 이 작업이 수행되므로 isLoading도 false 처리
         this.setState({ movies, isLoading: false });
     }
 
 
     render() {
-        
+
         const { isLoading, movies } = this.state;
 
         return (
             <section className="container">
                 {/* 마운트 -> 로딩중(True) -> (6초후) -> 로딩 완료(False) */}
-                {isLoading? (
+                {isLoading ? (
                     <div className="loader">
                         <span className="loader__text">Loading ... </span>
-                    </div> ) : (
-                        <div className ="movies">
-                            {movies.map(movie => (
-                            <Movie 
-                            key={movie.id}      //key 전달
-                            id={movie.id}
-                            year={movie.year}
-                            title={movie.title}
-                            summary={movie.summary}
-                            poster={movie.medium_cover_image}
-                            genres={movie.genres}
+                    </div>) : (
+                    <div className="movies">
+                        {movies.map(movie => (
+                            <Movie
+                                key={movie.id}      //key 전달
+                                id={movie.id}
+                                year={movie.year}
+                                title={movie.title}
+                                summary={movie.summary}
+                                poster={movie.medium_cover_image}
+                                genres={movie.genres}
                             />
-                            ))}
-                        </div>
-                    )}
-                    </section>
-                    );
-                }
-            }
+                        ))}
+                    </div>
+                )}
+            </section>
+        );
+    }
+}
 
 export default App;
