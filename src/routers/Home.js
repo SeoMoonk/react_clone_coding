@@ -8,12 +8,18 @@ import Pagebar from "../components/Pagebar";
 function Home() {
     //** useState **
     // ex) movies라는 state를 사용할 것인데, 이를 관리하기 위해 setMovies 라는 것을 사용할 것이고 초기값은 [] 이다.
-    const [isLoading, setIsLocation] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
-    let params = useParams();       //라우터에서 url을 통해 추가 정보가 들어오는 것은 params가 이해하고 받아들인다. (page 변화)
+    let params = useParams();   
+    /*
+        라우터에서 url을 통해 추가 정보가 들어오는 것은 params가 이해하고 받아들인다. (page 변화)
+        요약 : 동적 라우팅 (동적 라우팅은 URL 경로의 특정 부분이 변경될 때 해당 변경된 값을 활용하여 
+        컴포넌트를 렌더링하거나 작업을 수행하는 것을 의미)
+    */
 
-    //훅 Hook (생명주기 함수 -> "useEffect" 라는 리액트 훅으로 변경)
+
+    //리액트 훅 Hook (생명주기 함수 -> "useEffect" 라는 리액트 훅으로 변경)
     //componentDidMount,componentDitUpdate,componentWillUmmount 세가지 역할을 return에서 전부 수행함.
     useEffect(() => {
         console.log('didMount');
@@ -23,18 +29,22 @@ function Home() {
         fetch(`https://yts-proxy.now.sh/list_movies.json?sort_by=rating&page=${params.page}`)
             .then((response) => response.json())
             .then((data) => {
-                //console.log(data);
+                console.log(data);
 
-                //위에서 useState를 통해 state로써 선언한 친구들을 json으로 변환하여
-                //response에 대한 응답값으로 전달할 수 있도록 한다.
+                /* 
+                    1. fetch 함수를 사용하여 위의 url에 get 요청을 보내고 
+                    2. 요청에 대한 응답 데이터를 json 타입으로 받아온다.
+                    3. 얻어온 데이터를 가지고 useState를 통해 선언한 친구들의 내용을 변환해준다.
+                    4. (error) 혹시 에러가 있을 경우 에러코드를 콘솔에 출력한다.
+                    5. , [params.page] 이러한 동작들은 params.page에 변화가 있을 경우에만 수행된다.  
+                */
+
                 setTotalCount(data.data.movie_count);
                 let movies = data.data.movies;
-                setIsLocation(false);
+                setIsLoading(false);
                 setMovies(movies);
             })
             .catch((e) => console.log(e));
-        //console.log(movies);
-        //this.setState({movies,isLoading:false});
 
         return () => {
             console.log("willUmmount");
@@ -46,15 +56,17 @@ function Home() {
         <div>
             <Pagebar totalCount={totalCount} page={params.page} perPage={10} />
             <section className="container">
+                {/* 로딩되기 전 vs 로딩된 후 => 조건부 렌더링 이라고 함.*/}
                 {isLoading ? (
                     <div className="loader">
                         <span className="loader__text">Loading...</span>
                     </div>
                 ) : (
                     <div className="movies">
+                        {/* movie 배열을 순회하며 각 영화 정보에 대한 컴포넌트 "Movie" 를 생성 */}
                         {
                             movies.map((movie) => {
-                                console.log(movie);
+                                //console.log(movie);
                                 return (
                                     <Movie
                                         key={movie.id}

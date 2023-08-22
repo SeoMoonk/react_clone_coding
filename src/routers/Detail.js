@@ -13,6 +13,7 @@ function Detail(){
         if(location.state===null){
             navigate("/");
         }
+
     });
     if(location.state){
         return (
