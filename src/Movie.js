@@ -11,6 +11,9 @@ function Movie({ title, year, summary, poster, genres }) {
                 <h3 className="movie__title">{title}</h3>
                 <h5 className="movie__year">{year}</h5>
                 <ul className="movie__genres">
+
+                    {/* Movie 컴포넌트를 호출 할 때 Key 값을 받아왔는데,
+                    왜 장르를 추가했을 때 또 다른 key 값을 넣어줘야 하는가?*/}
                     {genres.map((genre, index) => {
                         return <li key={index} className="movie__genre">{genre}</li>;
                     })}
