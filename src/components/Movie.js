@@ -6,6 +6,7 @@ function Movie({title,year,summary,poster,genres}){
     return (
         <section className="movies">
         <div className="movie data">
+            {/* 이미지를 클릭하면, detail 페이지로 이동하는데, state를 전달하면서 이동한다.*/}
             <Link to="/detail-movie" state={{year,title,summary,poster,genres}}>
                 <img src={poster} alt={title} title={title}/>
             </Link>

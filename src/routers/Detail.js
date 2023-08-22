@@ -3,9 +3,13 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 function Detail(){
     const location = useLocation();
-    const navigate = useNavigate();
+    const navigate = useNavigate();     //자동 이동할 수 있게 해주는 친구
     console.log('location',location);
+
+    //함수형 컴포넌트에서 생명주기 함수를 대체하기 위한 리액트 훅 = useEffect
     useEffect(()=>{
+
+        //이미지를 클릭해서 들어온 것이 아닌, url 조작으로 들어와서 state가 없을 경우 -> home으로 리다이렉션
         if(location.state===null){
             navigate("/");
         }

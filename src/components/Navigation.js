@@ -7,6 +7,7 @@ import './Navigation.css';
 function Navigation() {
     return (
         <div className="nav">
+            {/* URL을 라우터로 보내는 친구 (Link to)*/}
             <Link to="/1">Home</Link>
             <Link to="/about">About</Link>
         </div>
