@@ -1,30 +1,30 @@
-import React from 'react';
-
-class Detail extends React.Component {
-
-
-  componentDidMount() {
-    //마운트 되면, 구조 분해 할당으로 location, history를 얻는다.
-    const { state, history } = this.props;
-
-    //단, 이미지 클릭이 아닌 직접 url을 입력해서 접근하려는 경우(undefined)
-    // home으로 리다이렉트 시킴.
-    if (!state) {
-      history.push('/');
-    }
-  }
-
-  render() {
-    const { location } = this.props;
-
-    if (location.state) {
-      const { title } = location.state;
-      return <span>{location.state.title}</span>;
+import React, {useEffect} from "react";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+function Detail(){
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log('location',location);
+    useEffect(()=>{
+        if(location.state===null){
+            navigate("/");
+        }
+    });
+    if(location.state){
+        return (
+        <div className="about__container">
+            <div className="movie">
+                <img src={location.state.poster} alt={location.state.title} title={location.state.title}/>
+                <h3 className="movie__title">{location.state.title}</h3>
+                <h5 className="movie__year">{location.state.year}</h5>
+                <p className="movie__summary">{location.state.summary.slice(0,180)}...</p>
+            </div>
+        </div>
+        );
     } else {
-      return null;
+        return null;
     }
-
-  }
+    
 }
 
 export default Detail;
